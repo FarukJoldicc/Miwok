@@ -2,4 +2,15 @@
     <!-- Height of each list item -->
     <dimen name="list_item_height">88dp</dimen>
 
+    <!-- Image width -->
+    <dimen name="image_width">88dp</dimen>
+
+    <!-- Padding for text layout -->
+    <dimen name="text_padding_start">16dp</dimen>
+
+    <!-- Play button size -->
+    <dimen name="play_button_size">25dp</dimen>
+
+    <!-- Play button right margin -->
+    <dimen name="play_button_margin_end">13dp</dimen>
 </resources>

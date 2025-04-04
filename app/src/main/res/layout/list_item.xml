@@ -4,10 +4,10 @@
     android:layout_height="@dimen/list_item_height"
     android:orientation="horizontal">
 
-    <!-- Image (No FrameLayout) -->
+    <!-- Image -->
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="88dp"
+        android:layout_width="@dimen/image_width"
         android:layout_height="match_parent"
         android:background="@color/tan_background"
         android:visibility="gone" />
@@ -19,7 +19,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:paddingStart="16dp">
+        android:paddingStart="@dimen/text_padding_start">
 
         <!-- Miwok Word (Bold + White) -->
         <TextView
@@ -42,10 +42,10 @@
     <!-- Play Button -->
     <ImageView
         android:id="@+id/play_button"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="@dimen/play_button_size"
+        android:layout_height="@dimen/play_button_size"
         android:src="@drawable/ic_play_arrow"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="13dp" />
+        android:layout_marginEnd="@dimen/play_button_margin_end" />
 
 </LinearLayout>
