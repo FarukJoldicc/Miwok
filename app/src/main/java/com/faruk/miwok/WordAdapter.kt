@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.LinearLayout
-
+import android.graphics.Typeface
 
 class WordAdapter(private val words: List<Word>, private val categoryColor: Int) :
     RecyclerView.Adapter<WordAdapter.ViewHolder>() {
@@ -28,19 +28,32 @@ class WordAdapter(private val words: List<Word>, private val categoryColor: Int)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val word = words[position]
-        holder.wordTextView.text = word.defaultTranslation
-        holder.translationTextView.text = word.miwokTranslation
 
-        // Set background color for each item (except Phrases)
+        // Ensure Miwok word is displayed in bold and white
+        holder.wordTextView.text = word.miwokTranslation
+        holder.wordTextView.setTypeface(null, Typeface.BOLD)
+        holder.wordTextView.setTextColor(ContextCompat.getColor(holder.itemView.context, android.R.color.white))
+
+        // Ensure English translation is displayed below and also white (but not bold)
+        holder.translationTextView.text = word.defaultTranslation
+        holder.translationTextView.setTextColor(ContextCompat.getColor(holder.itemView.context, android.R.color.white))
+        holder.translationTextView.visibility = View.VISIBLE // Ensure visibility
+
+        // Set background color for each item
         val color = ContextCompat.getColor(holder.itemView.context, categoryColor)
         holder.container.setBackgroundColor(color)
 
-        // Set image visibility for non-Phrases items
-        if (word.imageResourceId != null && word.imageResourceId != 0 && word.category != "Phrases") {
+        // Hide the image for the "Phrases" category
+        if (word.category == "Phrases") {
+            holder.imageView.visibility = View.GONE
+            holder.imageView.parent?.let { (it as View).visibility = View.GONE } // Hides the FrameLayout
+        } else if (word.imageResourceId != null && word.imageResourceId != 0) {
             holder.imageView.setImageResource(word.imageResourceId)
             holder.imageView.visibility = View.VISIBLE
+            holder.imageView.parent?.let { (it as View).visibility = View.VISIBLE } // Show the FrameLayout
         } else {
             holder.imageView.visibility = View.GONE
+            holder.imageView.parent?.let { (it as View).visibility = View.GONE } // Ensures no empty container
         }
     }
 

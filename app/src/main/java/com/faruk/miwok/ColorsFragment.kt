@@ -20,14 +20,14 @@ class ColorsFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.word_list, container, false)
 
         val words = listOf(
-            Word("Red", "weṭeṭṭi", R.drawable.color_red, "Colors"),
-            Word("Green", "chokokki", R.drawable.color_green, "Colors"),
-            Word("Brown", "ṭakaakki", R.drawable.color_brown, "Colors"),
-            Word("Gray", "ṭopoppi", R.drawable.color_gray, "Colors"),
-            Word("Black", "kululli", R.drawable.color_black, "Colors"),
-            Word("White", "kelelli", R.drawable.color_white, "Colors"),
-            Word("Dusty Yellow", "ṭopiisә", R.drawable.color_dusty_yellow, "Colors"),
-            Word("Mustard Yellow", "chiwiiṭә", R.drawable.color_mustard_yellow, "Colors")
+            Word("red", "weṭeṭṭi", R.drawable.color_red, "Colors"),
+            Word("green", "chokokki", R.drawable.color_green, "Colors"),
+            Word("brown", "ṭakaakki", R.drawable.color_brown, "Colors"),
+            Word("gray", "ṭopoppi", R.drawable.color_gray, "Colors"),
+            Word("black", "kululli", R.drawable.color_black, "Colors"),
+            Word("white", "kelelli", R.drawable.color_white, "Colors"),
+            Word("dusty yellow", "ṭopiisә", R.drawable.color_dusty_yellow, "Colors"),
+            Word("mustard yellow", "chiwiiṭә", R.drawable.color_mustard_yellow, "Colors")
         )
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.recycler_view)
