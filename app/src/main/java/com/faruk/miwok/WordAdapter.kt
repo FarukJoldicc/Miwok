@@ -45,15 +45,12 @@ class WordAdapter(private val words: List<Word>, private val categoryColor: Int)
 
         // Hide the image for the "Phrases" category
         if (word.category == "Phrases") {
-            holder.imageView.visibility = View.GONE
-            holder.imageView.parent?.let { (it as View).visibility = View.GONE } // Hides the FrameLayout
+            holder.imageView.visibility = View.GONE // Hides image, but keeps item visible
         } else if (word.imageResourceId != null && word.imageResourceId != 0) {
             holder.imageView.setImageResource(word.imageResourceId)
             holder.imageView.visibility = View.VISIBLE
-            holder.imageView.parent?.let { (it as View).visibility = View.VISIBLE } // Show the FrameLayout
         } else {
             holder.imageView.visibility = View.GONE
-            holder.imageView.parent?.let { (it as View).visibility = View.GONE } // Ensures no empty container
         }
     }
 

@@ -4,19 +4,13 @@
     android:layout_height="@dimen/list_item_height"
     android:orientation="horizontal">
 
-    <!-- Image Container -->
-    <FrameLayout
+    <!-- Image (No FrameLayout) -->
+    <ImageView
+        android:id="@+id/image_view"
         android:layout_width="88dp"
         android:layout_height="match_parent"
         android:background="@color/tan_background"
-        android:layout_gravity="start">  <!-- Make sure it aligns to the left -->
-
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-    </FrameLayout>
+        android:visibility="gone" />
 
     <!-- Text Layout -->
     <LinearLayout
