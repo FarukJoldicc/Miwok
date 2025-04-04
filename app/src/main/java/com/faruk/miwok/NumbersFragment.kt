@@ -20,16 +20,16 @@ class NumbersFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.word_list, container, false)
 
         val words = listOf(
-            Word("One", "Lutti", R.drawable.number_one, "Numbers"),
-            Word("Two", "Oṭiiko", R.drawable.number_two, "Numbers"),
-            Word("Three", "Tolookosu", R.drawable.number_three, "Numbers"),
-            Word("Four", "Oyyisa", R.drawable.number_four, "Numbers"),
-            Word("Five", "Massokka", R.drawable.number_five, "Numbers"),
-            Word("Six", "Temmokka", R.drawable.number_six, "Numbers"),
-            Word("Seven", "Kenekaku", R.drawable.number_seven, "Numbers"),
-            Word("Eight", "Kawinta", R.drawable.number_eight, "Numbers"),
-            Word("Nine", "Wo’e", R.drawable.number_nine, "Numbers"),
-            Word("Ten", "Na’aacha", R.drawable.number_ten, "Numbers")
+            Word("one", "lutti", R.drawable.number_one, "Numbers"),
+            Word("two", "oṭiiko", R.drawable.number_two, "Numbers"),
+            Word("three", "tolookosu", R.drawable.number_three, "Numbers"),
+            Word("four", "oyyisa", R.drawable.number_four, "Numbers"),
+            Word("five", "massokka", R.drawable.number_five, "Numbers"),
+            Word("six", "temmokka", R.drawable.number_six, "Numbers"),
+            Word("seven", "kenekaku", R.drawable.number_seven, "Numbers"),
+            Word("eight", "kawinta", R.drawable.number_eight, "Numbers"),
+            Word("nine", "wo’e", R.drawable.number_nine, "Numbers"),
+            Word("ten", "na’aacha", R.drawable.number_ten, "Numbers")
         )
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.recycler_view)

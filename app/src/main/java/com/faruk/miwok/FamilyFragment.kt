@@ -20,16 +20,16 @@ class FamilyFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.word_list, container, false)
 
         val words = listOf(
-            Word("Father", "әpә", R.drawable.family_father, "Family"),
-            Word("Mother", "әṭa", R.drawable.family_mother, "Family"),
-            Word("Son", "angsi", R.drawable.family_son, "Family"),
-            Word("Daughter", "tune", R.drawable.family_daughter, "Family"),
-            Word("Older Brother", "taachi", R.drawable.family_older_brother, "Family"),
-            Word("Younger Brother", "chalitti", R.drawable.family_younger_brother, "Family"),
-            Word("Older Sister", "teṭe", R.drawable.family_older_sister, "Family"),
-            Word("Younger Sister", "kolliti", R.drawable.family_younger_sister, "Family"),
-            Word("Grandmother", "ama", R.drawable.family_grandmother, "Family"),
-            Word("Grandfather", "paapa", R.drawable.family_grandfather, "Family")
+            Word("father", "әpә", R.drawable.family_father, "Family"),
+            Word("mother", "әṭa", R.drawable.family_mother, "Family"),
+            Word("son", "angsi", R.drawable.family_son, "Family"),
+            Word("daughter", "tune", R.drawable.family_daughter, "Family"),
+            Word("older Brother", "taachi", R.drawable.family_older_brother, "Family"),
+            Word("younger Brother", "chalitti", R.drawable.family_younger_brother, "Family"),
+            Word("older Sister", "teṭe", R.drawable.family_older_sister, "Family"),
+            Word("younger Sister", "kolliti", R.drawable.family_younger_sister, "Family"),
+            Word("grandmother", "ama", R.drawable.family_grandmother, "Family"),
+            Word("grandfather", "paapa", R.drawable.family_grandfather, "Family")
         )
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.recycler_view)
