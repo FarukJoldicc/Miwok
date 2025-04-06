@@ -1,7 +1,5 @@
 package com.faruk.miwok
 
-import com.faruk.miwok.Word  // Add this import
-
 object WordData {
 
     private val wordList = listOf(
