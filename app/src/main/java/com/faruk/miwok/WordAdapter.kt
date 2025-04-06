@@ -1,7 +1,6 @@
 package com.faruk.miwok
 
 import android.content.Context
-import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class WordAdapter(
     private val context: Context,
     private val words: List<Word>,
-    private val categoryColor: Int,
-    private var mediaPlayer: MediaPlayer?
+    private val categoryColor: Int
 ) : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,6 +38,7 @@ class WordAdapter(
         val color = ContextCompat.getColor(holder.itemView.context, categoryColor)
         holder.container.setBackgroundColor(color)
 
+        // If the category is "Phrases", hide the image
         if (word.category == "Phrases") {
             holder.imageView.visibility = View.GONE
         } else if (word.imageResourceId != null && word.imageResourceId != 0) {
@@ -49,8 +48,9 @@ class WordAdapter(
             holder.imageView.visibility = View.GONE
         }
 
+        // Set up the click listener to play sound
         val clickListener = View.OnClickListener {
-            playSound(context, word.soundFileName)
+            MediaPlayerManager.playSound(context, word.soundFileName)  // Use MediaPlayerManager to play the sound
         }
 
         holder.container.setOnClickListener(clickListener)
@@ -61,25 +61,4 @@ class WordAdapter(
     }
 
     override fun getItemCount(): Int = words.size
-
-    private fun playSound(context: Context, fileName: String) {
-        mediaPlayer?.release()  // Stop and release the current media player
-        mediaPlayer = null
-
-        val resId = context.resources.getIdentifier(fileName, "raw", context.packageName)
-        if (resId == 0) return
-
-        mediaPlayer = MediaPlayer.create(context, resId).apply {
-            setOnCompletionListener {
-                release()
-                mediaPlayer = null
-            }
-            start()
-        }
-    }
-
-    fun releaseMediaPlayer() {
-        mediaPlayer?.release()
-        mediaPlayer = null
-    }
 }
