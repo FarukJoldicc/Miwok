@@ -1,4 +1,4 @@
-package com.faruk.miwok
+package com.faruk.miwok.components
 
 import android.content.Context
 import android.media.MediaPlayer

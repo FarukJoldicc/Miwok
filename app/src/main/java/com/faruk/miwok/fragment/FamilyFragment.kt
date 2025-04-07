@@ -1,4 +1,6 @@
-package com.faruk.miwok
+package com.faruk.miwok.fragment
+
+import com.faruk.miwok.R
 
 class FamilyFragment : BaseFragment() {
     override val categoryName = "Family"

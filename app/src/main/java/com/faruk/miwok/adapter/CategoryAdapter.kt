@@ -1,8 +1,12 @@
-package com.faruk.miwok
+package com.faruk.miwok.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.faruk.miwok.fragment.ColorsFragment
+import com.faruk.miwok.fragment.FamilyFragment
+import com.faruk.miwok.fragment.NumbersFragment
+import com.faruk.miwok.fragment.PhrasesFragment
 
 class CategoryAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int = 4

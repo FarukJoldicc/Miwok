@@ -1,4 +1,4 @@
-package com.faruk.miwok
+package com.faruk.miwok.data
 
 data class Word constructor(
     val defaultTranslation: String,
