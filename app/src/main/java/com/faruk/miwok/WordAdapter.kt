@@ -38,7 +38,6 @@ class WordAdapter(
         val color = ContextCompat.getColor(holder.itemView.context, categoryColor)
         holder.container.setBackgroundColor(color)
 
-        // If the category is "Phrases", hide the image
         if (word.category == "Phrases") {
             holder.imageView.visibility = View.GONE
         } else if (word.imageResourceId != null && word.imageResourceId != 0) {
@@ -48,16 +47,12 @@ class WordAdapter(
             holder.imageView.visibility = View.GONE
         }
 
-        // Set up the click listener to play sound
         val clickListener = View.OnClickListener {
-            MediaPlayerManager.playSound(context, word.soundFileName)  // Use MediaPlayerManager to play the sound
+            MediaPlayerManager.playSound(context, word.soundFileName)
         }
 
         holder.container.setOnClickListener(clickListener)
-        holder.imageView.setOnClickListener(clickListener)
-        holder.wordTextView.setOnClickListener(clickListener)
-        holder.translationTextView.setOnClickListener(clickListener)
-        holder.playButton.setOnClickListener(clickListener)
+
     }
 
     override fun getItemCount(): Int = words.size

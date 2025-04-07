@@ -15,11 +15,9 @@ class MainActivity : AppCompatActivity() {
         val viewPager: ViewPager2 = findViewById(R.id.view_pager)
         val tabLayout: TabLayout = findViewById(R.id.tab_layout)
 
-        // Set up adapter
         val adapter = CategoryAdapter(this)
         viewPager.adapter = adapter
 
-        // Connect tabs with ViewPager
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Numbers"
