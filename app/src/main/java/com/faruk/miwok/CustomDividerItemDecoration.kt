@@ -16,7 +16,7 @@ class CustomDividerItemDecoration(private val divider: Drawable) : RecyclerView.
             val position = parent.getChildAdapterPosition(child)
 
             if (position == RecyclerView.NO_POSITION || position == itemCount - 1) {
-                continue // Don't draw after the last item
+                continue
             }
 
             val params = child.layoutParams as RecyclerView.LayoutParams
