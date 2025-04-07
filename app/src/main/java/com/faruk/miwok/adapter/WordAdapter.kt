@@ -15,7 +15,7 @@ import com.faruk.miwok.data.Word
 
 class WordAdapter(
     private val context: Context,
-    private val words: List<Word>,
+    private var words: List<Word>,
     private val categoryColor: Int
 ) : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
 
@@ -56,6 +56,11 @@ class WordAdapter(
 
         holder.container.setOnClickListener(clickListener)
 
+    }
+
+    fun updateWords(newWords: List<Word>) {
+        words = newWords
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = words.size
