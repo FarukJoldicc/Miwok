@@ -1,4 +1,4 @@
-package com.faruk.miwok
+package com.faruk.miwok.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.faruk.miwok.components.CustomDividerItemDecoration
+import com.faruk.miwok.components.MediaPlayerManager
+import com.faruk.miwok.R
+import com.faruk.miwok.data.Word
+import com.faruk.miwok.adapter.WordAdapter
+import com.faruk.miwok.data.WordData
 
 open class BaseFragment : Fragment() {
 

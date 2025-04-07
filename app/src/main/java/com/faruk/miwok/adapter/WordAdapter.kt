@@ -1,4 +1,4 @@
-package com.faruk.miwok
+package com.faruk.miwok.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +9,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.faruk.miwok.components.MediaPlayerManager
+import com.faruk.miwok.R
+import com.faruk.miwok.data.Word
 
 class WordAdapter(
     private val context: Context,

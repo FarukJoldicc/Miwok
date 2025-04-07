@@ -1,8 +1,7 @@
-package com.faruk.miwok
+package com.faruk.miwok.components
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 class CustomDividerItemDecoration(private val divider: Drawable) : RecyclerView.ItemDecoration() {
