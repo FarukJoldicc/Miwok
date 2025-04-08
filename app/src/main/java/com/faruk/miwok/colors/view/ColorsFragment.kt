@@ -15,33 +15,34 @@ import com.faruk.miwok.components.MediaPlayerManager
 import com.faruk.miwok.data.Word
 import com.faruk.miwok.colors.presenter.ColorsContract
 import com.faruk.miwok.colors.presenter.ColorsPresenter
+import com.faruk.miwok.databinding.WordListBinding
 
 class ColorsFragment : Fragment(), ColorsContract.View {
 
     private lateinit var adapter: WordAdapter
     private lateinit var presenter: ColorsContract.Presenter
 
+    private var _binding: WordListBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.word_list, container, false)
-        setupRecyclerView(rootView)
-
+    ): View {
+        _binding = WordListBinding.inflate(inflater, container, false)
+        setupRecyclerView()
         presenter = ColorsPresenter(this)
         presenter.loadWords()
-
-        return rootView
+        return binding.root
     }
 
-    private fun setupRecyclerView(rootView: View) {
-        val recyclerView: RecyclerView = rootView.findViewById(R.id.recycler_view)
+    private fun setupRecyclerView() {
         adapter = WordAdapter(requireContext(), emptyList(), R.color.category_colors)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.adapter = adapter
 
         ContextCompat.getDrawable(requireContext(), R.drawable.black_divider)?.let {
-            recyclerView.addItemDecoration(CustomDividerItemDecoration(it))
+            binding.recyclerView.addItemDecoration(CustomDividerItemDecoration(it))
         }
     }
 
@@ -56,6 +57,7 @@ class ColorsFragment : Fragment(), ColorsContract.View {
 
     override fun onDestroyView() {
         presenter.onDestroy()
+        _binding = null
         super.onDestroyView()
     }
 }

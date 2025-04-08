@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.faruk.miwok.R
 import com.faruk.miwok.adapter.WordAdapter
 import com.faruk.miwok.components.CustomDividerItemDecoration
@@ -15,8 +14,12 @@ import com.faruk.miwok.components.MediaPlayerManager
 import com.faruk.miwok.data.Word
 import com.faruk.miwok.family.presenter.FamilyContract
 import com.faruk.miwok.family.presenter.FamilyPresenter
+import com.faruk.miwok.databinding.WordListBinding
 
 class FamilyFragment : Fragment(), FamilyContract.View {
+
+    private var _binding: WordListBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var adapter: WordAdapter
     private lateinit var presenter: FamilyContract.Presenter
@@ -24,24 +27,23 @@ class FamilyFragment : Fragment(), FamilyContract.View {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.word_list, container, false)
-        setupRecyclerView(rootView)
+    ): View {
+        _binding = WordListBinding.inflate(inflater, container, false)
+        setupRecyclerView()
 
-        presenter = FamilyPresenter(this)
+        presenter = FamilyPresenter(this, FamilyRepository(requireContext()))
         presenter.loadWords()
 
-        return rootView
+        return binding.root
     }
 
-    private fun setupRecyclerView(rootView: View) {
-        val recyclerView: RecyclerView = rootView.findViewById(R.id.recycler_view)
+    private fun setupRecyclerView() {
         adapter = WordAdapter(requireContext(), emptyList(), R.color.category_family)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.adapter = adapter
 
         ContextCompat.getDrawable(requireContext(), R.drawable.black_divider)?.let {
-            recyclerView.addItemDecoration(CustomDividerItemDecoration(it))
+            binding.recyclerView.addItemDecoration(CustomDividerItemDecoration(it))
         }
     }
 
@@ -56,6 +58,7 @@ class FamilyFragment : Fragment(), FamilyContract.View {
 
     override fun onDestroyView() {
         presenter.onDestroy()
+        _binding = null
         super.onDestroyView()
     }
 }
