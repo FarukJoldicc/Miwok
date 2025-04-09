@@ -1,3 +1,5 @@
+package com.faruk.miwok.data
+
 import com.faruk.miwok.R
 
 object WordData {
