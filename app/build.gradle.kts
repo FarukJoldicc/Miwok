@@ -56,11 +56,12 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 
 }
 
 kapt{
     correctErrorTypes = true
+    generateStubs = true
 }
