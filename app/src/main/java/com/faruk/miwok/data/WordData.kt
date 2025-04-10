@@ -55,4 +55,6 @@ object WordData {
     fun getWordsByCategory(category: String): List<Word> {
         return wordList.filter { it.category == category }
     }
+
+    fun getAllWords(): List<Word> = wordList
 }

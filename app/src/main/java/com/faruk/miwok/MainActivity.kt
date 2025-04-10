@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.faruk.miwok.adapter.CategoryAdapter
 import com.faruk.miwok.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.faruk.miwok.data.MiwokDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        MiwokDatabase.getDatabase(applicationContext)
 
         val adapter = CategoryAdapter(this)
         binding.viewPager.adapter = adapter

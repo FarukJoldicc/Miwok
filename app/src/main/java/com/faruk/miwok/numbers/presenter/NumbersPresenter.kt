@@ -3,7 +3,7 @@ package com.faruk.miwok.numbers.presenter
 import com.faruk.miwok.numbers.model.NumbersRepository
 
 class NumbersPresenter(
-    private var view: NumbersContract.View?,
+    private var view: NumbersContract.View? = null,
     private val repository: NumbersRepository = NumbersRepository()
 ) : NumbersContract.Presenter {
 

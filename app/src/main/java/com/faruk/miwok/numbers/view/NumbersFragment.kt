@@ -18,11 +18,11 @@ import com.faruk.miwok.databinding.WordListBinding
 
 class NumbersFragment : Fragment(), NumbersContract.View {
 
-    private var _binding: WordListBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var adapter: WordAdapter
     private lateinit var presenter: NumbersContract.Presenter
+
+    private var _binding: WordListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +30,8 @@ class NumbersFragment : Fragment(), NumbersContract.View {
     ): View {
         _binding = WordListBinding.inflate(inflater, container, false)
         setupRecyclerView()
-
         presenter = NumbersPresenter(this)
         presenter.loadWords()
-
         return binding.root
     }
 
