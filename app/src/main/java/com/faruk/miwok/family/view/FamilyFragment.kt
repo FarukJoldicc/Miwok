@@ -18,11 +18,11 @@ import com.faruk.miwok.databinding.WordListBinding
 
 class FamilyFragment : Fragment(), FamilyContract.View {
 
-    private var _binding: WordListBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var adapter: WordAdapter
     private lateinit var presenter: FamilyContract.Presenter
+
+    private var _binding: WordListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +30,8 @@ class FamilyFragment : Fragment(), FamilyContract.View {
     ): View {
         _binding = WordListBinding.inflate(inflater, container, false)
         setupRecyclerView()
-
-        presenter = FamilyPresenter(this, FamilyRepository(requireContext()))
+        presenter = FamilyPresenter(this)
         presenter.loadWords()
-
         return binding.root
     }
 
