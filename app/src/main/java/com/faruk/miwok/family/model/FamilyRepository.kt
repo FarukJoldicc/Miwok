@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class FamilyRepository(context: Context) {
 
-    private val wordDao = MiwokDatabase.getDatabase(context).wordDao()
+    private val wordDao = MiwokDatabase.getDatabase(context.applicationContext).wordDao()
 
     suspend fun getWords(): List<Word> = withContext(Dispatchers.IO) {
         wordDao.getWordsByCategory("Family")

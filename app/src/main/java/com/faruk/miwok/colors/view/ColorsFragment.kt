@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.faruk.miwok.R
 import com.faruk.miwok.adapter.WordAdapter
 import com.faruk.miwok.components.CustomDividerItemDecoration
@@ -15,6 +14,7 @@ import com.faruk.miwok.components.MediaPlayerManager
 import com.faruk.miwok.data.Word
 import com.faruk.miwok.colors.presenter.ColorsContract
 import com.faruk.miwok.colors.presenter.ColorsPresenter
+import com.faruk.miwok.colors.model.ColorsRepository
 import com.faruk.miwok.databinding.WordListBinding
 
 class ColorsFragment : Fragment(), ColorsContract.View {
@@ -31,7 +31,11 @@ class ColorsFragment : Fragment(), ColorsContract.View {
     ): View {
         _binding = WordListBinding.inflate(inflater, container, false)
         setupRecyclerView()
-        presenter = ColorsPresenter(this)
+        presenter = ColorsPresenter(
+            view = this,
+            repository = ColorsRepository(requireContext()),
+            lifecycleOwner = viewLifecycleOwner
+        )
         presenter.loadWords()
         return binding.root
     }

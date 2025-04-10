@@ -12,9 +12,10 @@ import com.faruk.miwok.adapter.WordAdapter
 import com.faruk.miwok.components.CustomDividerItemDecoration
 import com.faruk.miwok.components.MediaPlayerManager
 import com.faruk.miwok.data.Word
+import com.faruk.miwok.databinding.WordListBinding
+import com.faruk.miwok.family.model.FamilyRepository
 import com.faruk.miwok.family.presenter.FamilyContract
 import com.faruk.miwok.family.presenter.FamilyPresenter
-import com.faruk.miwok.databinding.WordListBinding
 
 class FamilyFragment : Fragment(), FamilyContract.View {
 
@@ -30,7 +31,7 @@ class FamilyFragment : Fragment(), FamilyContract.View {
     ): View {
         _binding = WordListBinding.inflate(inflater, container, false)
         setupRecyclerView()
-        presenter = FamilyPresenter(this)
+        presenter = FamilyPresenter(this, FamilyRepository(requireContext()), viewLifecycleOwner)
         presenter.loadWords()
         return binding.root
     }

@@ -10,7 +10,6 @@ class ColorsRepository(context: Context) {
 
     private val wordDao = MiwokDatabase.getDatabase(context.applicationContext).wordDao()
 
-    // Fetch words by category "Colors"
     suspend fun getWords(): List<Word> = withContext(Dispatchers.IO) {
         wordDao.getWordsByCategory("Colors")
     }
