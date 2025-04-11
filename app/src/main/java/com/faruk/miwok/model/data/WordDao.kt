@@ -1,4 +1,4 @@
-package com.faruk.miwok.data
+package com.faruk.miwok.model.data
 
 import androidx.room.Dao
 import androidx.room.Insert

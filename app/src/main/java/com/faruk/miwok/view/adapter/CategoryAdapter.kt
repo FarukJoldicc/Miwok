@@ -1,10 +1,10 @@
-package com.faruk.miwok.adapter
+package com.faruk.miwok.view.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.faruk.miwok.view.BaseWordFragment
 import com.faruk.miwok.R
+import com.faruk.miwok.view.fragment.BaseWordFragment
 
 class CategoryAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int = 4

@@ -1,4 +1,4 @@
-package com.faruk.miwok.adapter
+package com.faruk.miwok.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.faruk.miwok.components.MediaPlayerManager
-import com.faruk.miwok.data.Word
-import com.faruk.miwok.data.WordDiffCallback
+import com.faruk.miwok.view.components.MediaPlayerManager
+import com.faruk.miwok.model.data.Word
+import com.faruk.miwok.model.data.WordDiffCallback
 import com.faruk.miwok.databinding.ListItemBinding
 
 class WordAdapter(

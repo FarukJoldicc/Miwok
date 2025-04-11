@@ -1,4 +1,4 @@
-package com.faruk.miwok.data
+package com.faruk.miwok.model.data
 
 import android.content.Context
 import androidx.room.Database

@@ -1,8 +1,8 @@
-package com.faruk.miwok.model
+package com.faruk.miwok.model.repository
 
 import android.content.Context
-import com.faruk.miwok.data.Word
-import com.faruk.miwok.data.MiwokDatabase
+import com.faruk.miwok.model.data.Word
+import com.faruk.miwok.model.data.MiwokDatabase
 import kotlinx.coroutines.flow.Flow
 
 class WordRepository(context: Context) {

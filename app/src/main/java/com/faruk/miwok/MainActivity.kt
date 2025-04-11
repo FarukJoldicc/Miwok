@@ -2,10 +2,11 @@ package com.faruk.miwok
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.faruk.miwok.adapter.CategoryAdapter
+import com.faruk.miwok.view.adapter.CategoryAdapter
 import com.faruk.miwok.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import com.faruk.miwok.data.MiwokDatabase
+import com.faruk.miwok.model.data.MiwokDatabase
+import com.faruk.miwok.view.components.MediaPlayerManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,5 +31,10 @@ class MainActivity : AppCompatActivity() {
                 else -> ""
             }
         }.attach()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        MediaPlayerManager.release()
     }
 }
