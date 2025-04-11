@@ -8,6 +8,10 @@ android {
     namespace = "com.faruk.miwok"
     compileSdk = 35
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.faruk.miwok"
         minSdk = 24
@@ -28,10 +32,7 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -60,6 +61,7 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
 
 }
 

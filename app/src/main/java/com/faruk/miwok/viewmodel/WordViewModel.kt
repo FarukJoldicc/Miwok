@@ -1,30 +1,38 @@
 package com.faruk.miwok.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.faruk.miwok.data.Word
 import com.faruk.miwok.model.WordRepository
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class WordViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = WordRepository(application)
 
-    private val _category = MutableLiveData<String>()
-    private val _words = MutableLiveData<List<Word>>()
-    val words: LiveData<List<Word>> get() = _words
+    private val _category = MutableStateFlow("Numbers")
+    val category: StateFlow<String> get() = _category
+
+    private val _words = MutableStateFlow<List<Word>>(emptyList())
+    val words: StateFlow<List<Word>> get() = _words
+
+    init {
+        collectWords()
+    }
 
     fun setCategory(category: String) {
         _category.value = category
-        loadWords()
+        collectWords()
     }
 
-    private fun loadWords() {
-        _category.value?.let { category ->
-            viewModelScope.launch {
-                val result = repository.getWordsByCategory(category)
-                _words.postValue(result)
-            }
+    private fun collectWords() {
+        viewModelScope.launch {
+            repository.getWordsByCategory(_category.value)
+                .collect { words ->
+                    _words.value = words
+                }
         }
     }
 }

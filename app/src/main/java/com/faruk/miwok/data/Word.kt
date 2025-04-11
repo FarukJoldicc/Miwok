@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.ColumnInfo
 
-
 @Entity(tableName = "words")
 data class Word(
     @ColumnInfo(name = "default_translation") val defaultTranslation: String,
@@ -14,4 +13,3 @@ data class Word(
     @ColumnInfo(name = "sound_file_name") val soundFileName: String,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 )
-

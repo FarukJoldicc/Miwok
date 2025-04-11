@@ -4,12 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WordDao {
-
     @Query("SELECT * FROM words WHERE category = :category")
-    suspend fun getWordsByCategory(category: String): List<Word>
+    fun getWordsByCategory(category: String): Flow<List<Word>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(words: List<Word>)

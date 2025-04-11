@@ -6,7 +6,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.faruk.miwok.view.BaseWordFragment
 import com.faruk.miwok.R
 
-
 class CategoryAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int = 4
 
