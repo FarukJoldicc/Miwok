@@ -3,8 +3,8 @@ package com.faruk.miwok.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.faruk.miwok.data.Word
-import com.faruk.miwok.model.WordRepository
+import com.faruk.miwok.model.data.Word
+import com.faruk.miwok.model.repository.WordRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

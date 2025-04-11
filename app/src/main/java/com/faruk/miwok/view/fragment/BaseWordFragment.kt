@@ -1,4 +1,4 @@
-package com.faruk.miwok.view
+package com.faruk.miwok.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.faruk.miwok.adapter.WordAdapter
 import com.faruk.miwok.databinding.FragmentBaseWordBinding
 import com.faruk.miwok.viewmodel.WordViewModel
-import com.faruk.miwok.components.CustomDividerItemDecoration
-import kotlinx.coroutines.flow.collect
+import com.faruk.miwok.view.components.CustomDividerItemDecoration
 import kotlinx.coroutines.launch
 import com.faruk.miwok.R
+import com.faruk.miwok.view.components.MediaPlayerManager
+import com.faruk.miwok.view.adapter.WordAdapter
 
 class BaseWordFragment : Fragment() {
 
@@ -44,7 +44,6 @@ class BaseWordFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = this@BaseWordFragment.adapter
 
-            // Adding the black divider
             ContextCompat.getDrawable(requireContext(), R.drawable.black_divider)?.let {
                 addItemDecoration(CustomDividerItemDecoration(it))
             }
@@ -59,9 +58,16 @@ class BaseWordFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        MediaPlayerManager.release()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
+        MediaPlayerManager.release()
     }
 
     companion object {

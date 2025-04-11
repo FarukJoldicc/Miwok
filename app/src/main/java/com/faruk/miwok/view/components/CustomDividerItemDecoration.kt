@@ -1,4 +1,4 @@
-package com.faruk.miwok.components
+package com.faruk.miwok.view.components
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
