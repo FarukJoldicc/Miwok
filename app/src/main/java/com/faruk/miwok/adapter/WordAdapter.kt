@@ -4,17 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.faruk.miwok.R
 import com.faruk.miwok.components.MediaPlayerManager
 import com.faruk.miwok.data.Word
+import com.faruk.miwok.data.WordDiffCallback
 import com.faruk.miwok.databinding.ListItemBinding
 
 class WordAdapter(
     private val context: Context,
-    private var words: List<Word>,
     private val categoryColor: Int
-) : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
+) : ListAdapter<Word, WordAdapter.ViewHolder>(WordDiffCallback()) {
 
     inner class ViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -24,7 +24,7 @@ class WordAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val word = words[position]
+        val word = getItem(position)
 
         with(holder.binding) {
             wordTextView.text = word.miwokTranslation
@@ -46,12 +46,5 @@ class WordAdapter(
                 MediaPlayerManager.playSound(context, word.soundFileName)
             }
         }
-    }
-
-    override fun getItemCount(): Int = words.size
-
-    fun updateWords(newWords: List<Word>) {
-        words = newWords
-        notifyDataSetChanged()
     }
 }

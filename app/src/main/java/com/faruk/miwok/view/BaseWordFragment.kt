@@ -45,7 +45,7 @@ class BaseWordFragment : Fragment() {
         val category = arguments?.getString(ARG_CATEGORY) ?: "Numbers"
         colorResId = arguments?.getInt(ARG_COLOR) ?: R.color.category_numbers
 
-        adapter = WordAdapter(requireContext(), emptyList(), colorResId)
+        adapter = WordAdapter(requireContext(), colorResId)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
@@ -55,7 +55,7 @@ class BaseWordFragment : Fragment() {
 
         viewModel.setCategory(category)
         viewModel.words.observe(viewLifecycleOwner) {
-            adapter.updateWords(it)
+            adapter.submitList(it)
         }
 
         return binding.root
