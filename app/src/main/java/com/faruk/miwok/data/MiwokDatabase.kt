@@ -25,7 +25,7 @@ abstract class MiwokDatabase : RoomDatabase() {
                     MiwokDatabase::class.java,
                     "miwok_database"
                 )
-                    .addCallback(SeedDatabaseCallback(context.applicationContext))
+                    .addCallback(SeedDatabaseCallback())
                     .build()
                 INSTANCE = instance
                 instance
@@ -33,14 +33,12 @@ abstract class MiwokDatabase : RoomDatabase() {
         }
     }
 
-    private class SeedDatabaseCallback(private val context: Context) : RoomDatabase.Callback() {
+    private class SeedDatabaseCallback : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            // Populate the database in a background thread
             CoroutineScope(Dispatchers.IO).launch {
                 INSTANCE?.let { database ->
-                    val wordDao = database.wordDao()
-                    wordDao.insertAll(WordData.getAllWords())
+                    database.wordDao().insertAll(WordData.getAllWords())
                 }
             }
         }

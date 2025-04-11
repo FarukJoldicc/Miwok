@@ -3,20 +3,18 @@ package com.faruk.miwok.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.faruk.miwok.colors.view.ColorsFragment
-import com.faruk.miwok.family.view.FamilyFragment
-import com.faruk.miwok.numbers.view.NumbersFragment
-import com.faruk.miwok.phrases.view.PhrasesFragment
+import com.faruk.miwok.view.BaseWordFragment
+import com.faruk.miwok.R
 
 class CategoryAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int = 4
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> NumbersFragment()
-            1 -> FamilyFragment()
-            2 -> ColorsFragment()
-            3 -> PhrasesFragment()
+            0 -> BaseWordFragment.newInstance("Numbers", R.color.category_numbers)
+            1 -> BaseWordFragment.newInstance("Family", R.color.category_family)
+            2 -> BaseWordFragment.newInstance("Colors", R.color.category_colors)
+            3 -> BaseWordFragment.newInstance("Phrases", R.color.category_phrases)
             else -> throw IllegalArgumentException("Invalid position")
         }
     }
