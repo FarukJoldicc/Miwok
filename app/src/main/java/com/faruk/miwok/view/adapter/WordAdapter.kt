@@ -33,13 +33,13 @@ class WordAdapter(
             val color = ContextCompat.getColor(context, categoryColor)
             listItemContainer.setBackgroundColor(color)
 
-            if (word.category == "Phrases") {
-                imageView.visibility = android.view.View.GONE
-            } else if (word.imageResourceId != null && word.imageResourceId != 0) {
+            // Always hide the image by default
+            imageView.visibility = android.view.View.GONE
+
+            // Only show image if not "Phrases" and imageResourceId is valid
+            if (word.category != "Phrases" && word.imageResourceId != 0) {
                 imageView.setImageResource(word.imageResourceId)
                 imageView.visibility = android.view.View.VISIBLE
-            } else {
-                imageView.visibility = android.view.View.GONE
             }
 
             listItemContainer.setOnClickListener {
