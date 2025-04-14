@@ -6,39 +6,26 @@ import com.faruk.miwok.model.data.Word
 import com.faruk.miwok.model.repository.WordRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-import android.util.Log
 
 @HiltViewModel
 class WordViewModel @Inject constructor(
     private val repository: WordRepository
 ) : ViewModel() {
 
+    // Holds the currently selected category
     private val _category = MutableStateFlow("Numbers")
     val category: StateFlow<String> get() = _category
 
-    private val _words = MutableStateFlow<List<Word>>(emptyList())
-    val words: StateFlow<List<Word>> get() = _words
+    // Exposes words based on the currently selected category
+    val words: StateFlow<List<Word>> = _category
+        .flatMapLatest { selectedCategory ->
+            repository.getWordsByCategory(selectedCategory)
+        }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    init {
-        collectWords()  // Initial collection of words
-    }
-
+    // Update the current category
     fun setCategory(category: String) {
-        if (_category.value != category) {
-            _category.value = category
-            collectWords()
-        }
-    }
-
-    fun collectWords() {
-        viewModelScope.launch {
-            repository.getWordsByCategory(_category.value)
-                .collect { words ->
-                    _words.value = words
-                    Log.d("WordViewModel", "Words collected for category ${_category.value}: $words")
-                }
-        }
+        _category.value = category
     }
 }

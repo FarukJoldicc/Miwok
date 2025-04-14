@@ -52,18 +52,10 @@ class BaseWordFragment : Fragment() {
             }
         }
 
-        // Set category in ViewModel
+        // Set the current category in ViewModel
         viewModel.setCategory(category)
 
-        // Observe category changes
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.category.collect { currentCategory ->
-                Log.d("BaseWordFragment", "Category changed to: $currentCategory")
-                viewModel.collectWords()
-            }
-        }
-
-        // Collect words from ViewModel
+        // Collect and submit words to the adapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.words.collect { words ->
                 adapter.submitList(words)
@@ -80,7 +72,6 @@ class BaseWordFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
         MediaPlayerManager.release()
     }
 
@@ -90,9 +81,10 @@ class BaseWordFragment : Fragment() {
 
         fun newInstance(category: String, categoryColor: Int): BaseWordFragment {
             val fragment = BaseWordFragment()
-            val args = Bundle()
-            args.putString(ARG_CATEGORY, category)
-            args.putInt(ARG_COLOR, categoryColor)
+            val args = Bundle().apply {
+                putString(ARG_CATEGORY, category)
+                putInt(ARG_COLOR, categoryColor)
+            }
             fragment.arguments = args
             return fragment
         }
