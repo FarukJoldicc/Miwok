@@ -16,7 +16,10 @@ import kotlinx.coroutines.launch
 import com.faruk.miwok.R
 import com.faruk.miwok.view.components.MediaPlayerManager
 import com.faruk.miwok.view.adapter.WordAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import android.util.Log
 
+@AndroidEntryPoint
 class BaseWordFragment : Fragment() {
 
     private var _binding: FragmentBaseWordBinding? = null
@@ -49,11 +52,22 @@ class BaseWordFragment : Fragment() {
             }
         }
 
+        // Set category in ViewModel
         viewModel.setCategory(category)
 
+        // Observe category changes
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.category.collect { currentCategory ->
+                Log.d("BaseWordFragment", "Category changed to: $currentCategory")
+                viewModel.collectWords()
+            }
+        }
+
+        // Collect words from ViewModel
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.words.collect { words ->
                 adapter.submitList(words)
+                Log.d("BaseWordFragment", "Words collected for category $category: $words")
             }
         }
     }

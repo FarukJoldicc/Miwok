@@ -10,6 +10,7 @@ import com.faruk.miwok.view.components.MediaPlayerManager
 import com.faruk.miwok.model.data.Word
 import com.faruk.miwok.model.data.WordDiffCallback
 import com.faruk.miwok.databinding.ListItemBinding
+import android.util.Log
 
 class WordAdapter(
     private val context: Context,
@@ -25,6 +26,9 @@ class WordAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val word = getItem(position)
+
+        // Log for debugging purposes
+        Log.d("WordAdapter", "Word at position $position: ${word.miwokTranslation}, Category: ${word.category}, Image Resource: ${word.imageResourceId}")
 
         with(holder.binding) {
             wordTextView.text = word.miwokTranslation

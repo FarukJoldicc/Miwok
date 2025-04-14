@@ -14,33 +14,21 @@ abstract class MiwokDatabase : RoomDatabase() {
 
     abstract fun wordDao(): WordDao
 
-    companion object {
-        @Volatile
-        private var INSTANCE: MiwokDatabase? = null
-
-        fun getDatabase(context: Context): MiwokDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MiwokDatabase::class.java,
-                    "miwok_database"
-                )
-                    .addCallback(SeedDatabaseCallback())
-                    .build()
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
-
-    private class SeedDatabaseCallback : RoomDatabase.Callback() {
+    class SeedDatabaseCallback(private val context: Context) : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             CoroutineScope(Dispatchers.IO).launch {
-                INSTANCE?.let { database ->
-                    database.wordDao().insertAll(WordData.getAllWords())
-                }
+                val database = getDatabaseInstance(context)
+                database.wordDao().insertAll(WordData.getAllWords())
             }
+        }
+
+        private fun getDatabaseInstance(context: Context): MiwokDatabase {
+            return Room.databaseBuilder(
+                context.applicationContext,
+                MiwokDatabase::class.java,
+                "miwok_database"
+            ).build()
         }
     }
 }

@@ -9,7 +9,9 @@ import com.faruk.miwok.view.adapter.CategoryAdapter
 import com.faruk.miwok.view.components.MediaPlayerManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -19,8 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        MiwokDatabase.getDatabase(applicationContext)
-
+        // Set up the view pager with tabs
         val adapter = CategoryAdapter(this)
         binding.viewPager.adapter = adapter
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             }
         }.attach()
 
+        // Disable tooltips on tabs
         disableTabTooltips(binding.tabLayout)
     }
 
@@ -41,11 +43,14 @@ class MainActivity : AppCompatActivity() {
         val tabStrip = tabLayout.getChildAt(0) as? ViewGroup ?: return
         for (i in 0 until tabStrip.childCount) {
             val tabView = tabStrip.getChildAt(i)
-            tabView.tooltipText = null
-            tabView.setOnLongClickListener { true } 
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                tabView.tooltipText = null
+            }
+            tabView.setOnLongClickListener { true }
         }
     }
 
+    // Release media player resources when stopping the activity
     override fun onStop() {
         super.onStop()
         MediaPlayerManager.release()

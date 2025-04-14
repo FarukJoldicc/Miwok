@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.DiffUtil
 
 class WordDiffCallback : DiffUtil.ItemCallback<Word>() {
     override fun areItemsTheSame(oldItem: Word, newItem: Word): Boolean {
-        // Check if items are the same (e.g., by ID or unique identifier)
-        return oldItem.soundFileName == newItem.soundFileName
+        // Use a unique identifier like id to compare the items
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Word, newItem: Word): Boolean {

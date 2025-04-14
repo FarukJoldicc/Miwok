@@ -1,16 +1,19 @@
 package com.faruk.miwok.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.faruk.miwok.model.data.Word
 import com.faruk.miwok.model.repository.WordRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import android.util.Log
 
-class WordViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = WordRepository(application)
+@HiltViewModel
+class WordViewModel @Inject constructor(
+    private val repository: WordRepository
+) : ViewModel() {
 
     private val _category = MutableStateFlow("Numbers")
     val category: StateFlow<String> get() = _category
@@ -19,19 +22,22 @@ class WordViewModel(application: Application) : AndroidViewModel(application) {
     val words: StateFlow<List<Word>> get() = _words
 
     init {
-        collectWords()
+        collectWords()  // Initial collection of words
     }
 
     fun setCategory(category: String) {
-        _category.value = category
-        collectWords()
+        if (_category.value != category) {
+            _category.value = category
+            collectWords()
+        }
     }
 
-    private fun collectWords() {
+    fun collectWords() {
         viewModelScope.launch {
             repository.getWordsByCategory(_category.value)
                 .collect { words ->
                     _words.value = words
+                    Log.d("WordViewModel", "Words collected for category ${_category.value}: $words")
                 }
         }
     }
