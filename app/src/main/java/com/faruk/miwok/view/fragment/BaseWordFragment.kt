@@ -16,7 +16,10 @@ import kotlinx.coroutines.launch
 import com.faruk.miwok.R
 import com.faruk.miwok.view.components.MediaPlayerManager
 import com.faruk.miwok.view.adapter.WordAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import android.util.Log
 
+@AndroidEntryPoint
 class BaseWordFragment : Fragment() {
 
     private var _binding: FragmentBaseWordBinding? = null
@@ -49,11 +52,14 @@ class BaseWordFragment : Fragment() {
             }
         }
 
+        // Set the current category in ViewModel
         viewModel.setCategory(category)
 
+        // Collect and submit words to the adapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.words.collect { words ->
                 adapter.submitList(words)
+                Log.d("BaseWordFragment", "Words collected for category $category: $words")
             }
         }
     }
@@ -66,7 +72,6 @@ class BaseWordFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
         MediaPlayerManager.release()
     }
 
@@ -76,9 +81,10 @@ class BaseWordFragment : Fragment() {
 
         fun newInstance(category: String, categoryColor: Int): BaseWordFragment {
             val fragment = BaseWordFragment()
-            val args = Bundle()
-            args.putString(ARG_CATEGORY, category)
-            args.putInt(ARG_COLOR, categoryColor)
+            val args = Bundle().apply {
+                putString(ARG_CATEGORY, category)
+                putInt(ARG_COLOR, categoryColor)
+            }
             fragment.arguments = args
             return fragment
         }

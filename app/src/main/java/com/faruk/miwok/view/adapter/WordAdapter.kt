@@ -10,6 +10,9 @@ import com.faruk.miwok.view.components.MediaPlayerManager
 import com.faruk.miwok.model.data.Word
 import com.faruk.miwok.model.data.WordDiffCallback
 import com.faruk.miwok.databinding.ListItemBinding
+import android.util.Log
+import android.view.View
+
 
 class WordAdapter(
     private val context: Context,
@@ -33,13 +36,12 @@ class WordAdapter(
             val color = ContextCompat.getColor(context, categoryColor)
             listItemContainer.setBackgroundColor(color)
 
-            // Always hide the image by default
-            imageView.visibility = android.view.View.GONE
-
-            // Only show image if not "Phrases" and imageResourceId is valid
             if (word.category != "Phrases" && word.imageResourceId != 0) {
+                imageView.visibility = View.VISIBLE
                 imageView.setImageResource(word.imageResourceId)
-                imageView.visibility = android.view.View.VISIBLE
+            } else {
+                imageView.setImageDrawable(null)
+                imageView.visibility = View.GONE
             }
 
             listItemContainer.setOnClickListener {
