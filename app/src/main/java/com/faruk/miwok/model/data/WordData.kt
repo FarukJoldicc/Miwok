@@ -52,9 +52,5 @@ object WordData {
         Word("Come here.", "әnni'nem", 0, "Phrases", "phrase_come_here")
     )
 
-    fun getWordsByCategory(category: String): List<Word> {
-        return wordList.filter { it.category == category }
-    }
-
     fun getAllWords(): List<Word> = wordList
 }

@@ -22,7 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class BaseWordFragment : Fragment() {
 
     private var _binding: FragmentBaseWordBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = _binding!!
     private val viewModel: WordViewModel by viewModels()
     private lateinit var adapter: WordAdapter
 
@@ -31,6 +32,8 @@ class BaseWordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBaseWordBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
         return binding.root
     }
 
@@ -49,7 +52,6 @@ class BaseWordFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = this@BaseWordFragment.adapter
 
-            // Add custom divider
             val divider = ContextCompat.getDrawable(requireContext(), R.drawable.black_divider)
             if (divider != null) {
                 addItemDecoration(CustomDividerItemDecoration(divider))

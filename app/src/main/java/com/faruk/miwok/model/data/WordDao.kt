@@ -12,5 +12,5 @@ interface WordDao {
     fun getWordsByCategory(category: String): Flow<List<Word>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(words: List<Word>)
+    fun insertAll(words: List<Word>)
 }
