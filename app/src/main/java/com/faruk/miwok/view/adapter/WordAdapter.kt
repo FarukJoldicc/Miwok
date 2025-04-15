@@ -1,52 +1,45 @@
 package com.faruk.miwok.view.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.faruk.miwok.view.components.MediaPlayerManager
-import com.faruk.miwok.model.data.Word
-import com.faruk.miwok.model.data.WordDiffCallback
-import com.faruk.miwok.databinding.ListItemBinding
-import android.util.Log
 import android.view.View
-
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.faruk.miwok.databinding.ItemWordBinding
+import com.faruk.miwok.model.data.Word
 
 class WordAdapter(
-    private val context: Context,
-    private val categoryColor: Int
-) : ListAdapter<Word, WordAdapter.ViewHolder>(WordDiffCallback()) {
+    private val categoryColor: Int,
+    private val onClick: (Word) -> Unit
+) : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
 
-    inner class ViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
+    private var wordList: List<Word> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    fun submitList(words: List<Word>) {
+        wordList = words
+        notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val word = getItem(position)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
+        val binding = ItemWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return WordViewHolder(binding)
+    }
 
-        with(holder.binding) {
-            wordTextView.text = word.miwokTranslation
-            translationTextView.text = word.defaultTranslation
+    override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
+        holder.bind(wordList[position])
+    }
 
-            val color = ContextCompat.getColor(context, categoryColor)
-            listItemContainer.setBackgroundColor(color)
+    override fun getItemCount(): Int = wordList.size
 
-            if (word.category != "Phrases" && word.imageResourceId != 0) {
-                imageView.visibility = View.VISIBLE
-                imageView.setImageResource(word.imageResourceId)
-            } else {
-                imageView.setImageDrawable(null)
-                imageView.visibility = View.GONE
+    inner class WordViewHolder(private val binding: ItemWordBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(word: Word) {
+            binding.word = word
+            binding.categoryColor = categoryColor
+            binding.clickListener = View.OnClickListener {
+                onClick(word)
             }
-
-            listItemContainer.setOnClickListener {
-                MediaPlayerManager.playSound(context, word.soundFileName)
-            }
+            binding.executePendingBindings()
         }
     }
 }

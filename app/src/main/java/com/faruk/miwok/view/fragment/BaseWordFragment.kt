@@ -17,14 +17,12 @@ import com.faruk.miwok.R
 import com.faruk.miwok.view.components.MediaPlayerManager
 import com.faruk.miwok.view.adapter.WordAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import android.util.Log
 
 @AndroidEntryPoint
 class BaseWordFragment : Fragment() {
 
     private var _binding: FragmentBaseWordBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: WordViewModel by viewModels()
     private lateinit var adapter: WordAdapter
 
@@ -40,26 +38,28 @@ class BaseWordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val category = arguments?.getString(ARG_CATEGORY) ?: ""
-        val categoryColor = arguments?.getInt(ARG_COLOR) ?: 0
+        val categoryColorResId = arguments?.getInt(ARG_COLOR) ?: 0
+        val categoryColor = ContextCompat.getColor(requireContext(), categoryColorResId)
 
-        adapter = WordAdapter(requireContext(), categoryColor)
+        adapter = WordAdapter(categoryColor) { word ->
+            MediaPlayerManager.playSound(requireContext(), word.soundFileName)
+        }
+
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@BaseWordFragment.adapter
 
-            ContextCompat.getDrawable(requireContext(), R.drawable.black_divider)?.let {
-                addItemDecoration(CustomDividerItemDecoration(it))
+            // Add custom divider
+            val divider = ContextCompat.getDrawable(requireContext(), R.drawable.black_divider)
+            if (divider != null) {
+                addItemDecoration(CustomDividerItemDecoration(divider))
             }
         }
 
-        // Set the current category in ViewModel
         viewModel.setCategory(category)
-
-        // Collect and submit words to the adapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.words.collect { words ->
                 adapter.submitList(words)
-                Log.d("BaseWordFragment", "Words collected for category $category: $words")
             }
         }
     }
@@ -72,7 +72,6 @@ class BaseWordFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        MediaPlayerManager.release()
     }
 
     companion object {
@@ -81,11 +80,10 @@ class BaseWordFragment : Fragment() {
 
         fun newInstance(category: String, categoryColor: Int): BaseWordFragment {
             val fragment = BaseWordFragment()
-            val args = Bundle().apply {
+            fragment.arguments = Bundle().apply {
                 putString(ARG_CATEGORY, category)
                 putInt(ARG_COLOR, categoryColor)
             }
-            fragment.arguments = args
             return fragment
         }
     }
