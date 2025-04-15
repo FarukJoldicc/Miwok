@@ -3,6 +3,7 @@ package com.faruk.miwok.di
 import android.content.Context
 import androidx.room.Room
 import com.faruk.miwok.model.data.MiwokDatabase
+import com.faruk.miwok.model.data.SeedDatabaseCallback
 import com.faruk.miwok.model.data.WordDao
 import com.faruk.miwok.model.repository.WordRepository
 import dagger.Module
@@ -23,7 +24,7 @@ object AppModule {
             context,
             MiwokDatabase::class.java,
             "miwok_database"
-        ).addCallback(MiwokDatabase.SeedDatabaseCallback(context))
+        ).addCallback(SeedDatabaseCallback(context))
             .build()
     }
 

@@ -11,6 +11,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 
     defaultConfig {
@@ -62,8 +63,8 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation("com.google.dagger:hilt-android:2.50")
-    kapt("com.google.dagger:hilt-compiler:2.50")
+    implementation(libs.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
 }
 
 kapt{
