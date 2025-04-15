@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.faruk.miwok.databinding.ActivityMainBinding
-import com.faruk.miwok.model.data.MiwokDatabase
 import com.faruk.miwok.view.adapter.CategoryAdapter
 import com.faruk.miwok.view.components.MediaPlayerManager
 import com.google.android.material.tabs.TabLayout
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = CategoryAdapter(this)
         binding.viewPager.adapter = adapter
 
+        // Attach tabs with titles
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Numbers"
