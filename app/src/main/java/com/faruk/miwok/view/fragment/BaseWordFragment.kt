@@ -19,11 +19,10 @@ import com.faruk.miwok.view.adapter.WordAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BaseWordFragment : Fragment() {
+class BaseWordFragment : Fragment(), WordViewModel.ViewDelegate {
 
     private var _binding: FragmentBaseWordBinding? = null
-    private val binding
-        get() = _binding!!
+    private val binding get() = _binding!!
     private val viewModel: WordViewModel by viewModels()
     private lateinit var adapter: WordAdapter
 
@@ -41,9 +40,25 @@ class BaseWordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val category = arguments?.getString(ARG_CATEGORY) ?: ""
-        val categoryColorResId = arguments?.getInt(ARG_COLOR) ?: 0
-        val categoryColor = ContextCompat.getColor(requireContext(), categoryColorResId)
+        val colorResId = arguments?.getInt(ARG_COLOR) ?: 0
 
+        viewModel.setArguments(category, colorResId)
+        viewModel.setViewDelegate(this)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.categoryColor.collect { color ->
+                setupRecyclerView(color)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.words.collect { words ->
+                adapter.submitList(words)
+            }
+        }
+    }
+
+    private fun setupRecyclerView(categoryColor: Int) {
         adapter = WordAdapter(categoryColor) { word ->
             MediaPlayerManager.playSound(requireContext(), word.soundFileName)
         }
@@ -57,13 +72,10 @@ class BaseWordFragment : Fragment() {
                 addItemDecoration(CustomDividerItemDecoration(divider))
             }
         }
+    }
 
-        viewModel.setCategory(category)
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.words.collect { words ->
-                adapter.submitList(words)
-            }
-        }
+    override fun getColorFromResId(resId: Int): Int {
+        return ContextCompat.getColor(requireContext(), resId)
     }
 
     override fun onPause() {

@@ -14,8 +14,28 @@ class WordViewModel @Inject constructor(
     private val repository: WordRepository
 ) : ViewModel() {
 
-    private val _category = MutableStateFlow("Numbers")
+    interface ViewDelegate {
+        fun getColorFromResId(resId: Int): Int
+    }
+
+    private val _category = MutableStateFlow("")
     val category: StateFlow<String> get() = _category
+
+    private var categoryColorResId: Int = 0
+    private var viewDelegate: ViewDelegate? = null
+
+    private val _categoryColor = MutableStateFlow(0)
+    val categoryColor: StateFlow<Int> get() = _categoryColor
+
+    fun setArguments(category: String, colorResId: Int) {
+        _category.value = category
+        categoryColorResId = colorResId
+    }
+
+    fun setViewDelegate(delegate: ViewDelegate) {
+        viewDelegate = delegate
+        _categoryColor.value = viewDelegate?.getColorFromResId(categoryColorResId) ?: 0
+    }
 
     val words: StateFlow<List<Word>> = _category
         .flatMapLatest { selectedCategory ->
@@ -23,7 +43,8 @@ class WordViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    fun setCategory(category: String) {
-        _category.value = category
+    override fun onCleared() {
+        super.onCleared()
+        viewDelegate = null
     }
 }
